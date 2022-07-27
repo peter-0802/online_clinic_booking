@@ -1,0 +1,10 @@
+How to get updates?
+1. open git bash
+2. enter "git pull"
+
+
+How to run the system?
+1. Open CMD on folder directory
+2. enter "python app.py"
+3. take note of what adress the server is running its mostly "127.0.0.1:5000"
+4. go to browser and enter the address "127.0.0.1:5000"
