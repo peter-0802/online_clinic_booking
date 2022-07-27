@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <title>Online Clicic Booking</title>
+    <meta property="og:title" content="Up Start Finance" />
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <meta property="twitter:card" content="summary_large_image" />
+    <style data-tag="reset-style-sheet">
+      html {  line-height: 1.15;}body {  margin: 0;}* {  box-sizing: border-box;  border-width: 0;  border-style: solid;}p,li,ul,pre,div,h1,h2,h3,h4,h5,h6 {  margin: 0;  padding: 0;}button,input,optgroup,select,textarea {  font-family: inherit;  font-size: 100%;  line-height: 1.15;  margin: 0;}button,select {  text-transform: none;}button,[type="button"],[type="reset"],[type="submit"] {  -webkit-appearance: button;}button::-moz-focus-inner,[type="button"]::-moz-focus-inner,[type="reset"]::-moz-focus-inner,[type="submit"]::-moz-focus-inner {  border-style: none;  padding: 0;}button:-moz-focus,[type="button"]:-moz-focus,[type="reset"]:-moz-focus,[type="submit"]:-moz-focus {  outline: 1px dotted ButtonText;}a {  color: inherit;  text-decoration: inherit;}input {  padding: 2px 4px;}img {  display: block;}html { scroll-behavior: smooth  }
+    </style>
+    <style data-tag="default-style-sheet">
+      html {
+        font-family: Titillium Web;
+        font-size: 16px;
+      }
+
+      body {
+        font-weight: 400;
+        font-style:normal;
+        text-decoration: none;
+        text-transform: none;
+        letter-spacing: normal;
+        line-height: 1.15;
+        color: var(--dl-color-scheme-green100);
+        background-color: var(--dl-color-scheme-yellow20);
+
+      }
+    </style>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Lexend:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      data-tag="font"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      data-tag="font"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap"
+      data-tag="font"
+    />
+
+    <!--<link rel="stylesheet" href="./style.css" />-->
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/style.css') }}">
+  </head>
+  <body>
+    <div>
+      <!--<link href="./home.css" rel="stylesheet" />-->
+      <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/home.css') }}">
+      <div class="home-container">
+        <div class="navbar-container">
+          <div class="max-width">
+            <div class="home-logo">
+              <img
+                alt="image"
+                src="{{url_for('static', filename='assets/group 2.svg')}}"
+                class="home-image"
+              />
+              <span class="brand-Name">
+                <span class="home-text01">ONLINE </span>
+                <span>Clinic</span>
+              </span>
+            </div>
+            <div class="home-links">
+              <!--
+              <span class="home-text03 navbar-Link">How it works</span>
+              <span class="home-text04 navbar-Link">Features</span>
+              <span class="home-text05 navbar-Link">Blog</span>
+              <span class="home-text06 navbar-Link">Pricing</span>
+            -->
+              <button class="button-secondary button">Log In</button>
+              <button class="button button-primary">About Us</button>
+            </div>
+            <div class="apt_nav home-burger-menu navbar-burger-menu">
+              <svg viewBox="0 0 1024 1024" class="home-icon">
+                <path
+                  d="M128 256h768v86h-768v-86zM128 554v-84h768v84h-768zM128 768v-86h768v86h-768z"
+                ></path>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div class="hero-container section-container">
+          <div class="home-max-width1 max-width">
+            <div class="home-content">
+              <span class="home-subtitle before-Heading">
+                <br>
+                Davao City | 8000 | Region IX | Philippines
+              </span>
+              <h1 class="home-title">
+                <span class="home-text07">
+                  Making communities
+                </span>
+                <span class="home-text08">healthier</span>
+              </h1>
+              <span class="home-description">
+                “Good health is not something we can buy. However, it can be an extremely valuable savings account.”
+                <br>
+              </span>
+              <div class="home-container01">
+                <button class="button button-gradient">Book Now</button>
+                <button class="button button-transparent">Availability</button>
+              </div>
+            </div>
+            <div class="home-image1">
+              <img
+                alt="image"
+                src="{{url_for('static', filename='assets/hero1.png')}}"
+                class="home-hero-image"
+              />
+              <img
+                alt="image"
+                src="{{url_for('static', filename='assets/home_graphics1.png')}}"
+                class="home-graphic-top"
+              />
+              <img
+                alt="image"
+                src="{{url_for('static', filename='assets/group 18-1200w.png')}}"
+                class="home-image2"
+              />
+            </div>
+          </div>
+        </div>
+        <!--
+        <div class="section-container">
+          <div class="home-max-width2 max-width">
+            <div class="home-image3">
+              <img
+                alt="image"
+                src="public/playground_assets/group%2020-1200w.png"
+                class="home-hero-image1"
+              />
+            </div>
+
+            this is the 2nd section
+            <div class="home-content1">
+              <span class="home-text09 before-Heading">how it works</span>
+              <h1 class="home-text10">
+                <span class="home-text11">Pay and get paid</span>
+                <span class="home-text12">faster</span>
+                <span class="home-text13">than ever.</span>
+                <span class="home-text14"></span>
+              </h1>
+              <span class="home-text15">
+                Amet minim mollit non deserunt ullamco est sit aliqua dolor do
+                amet sint. Velit officia consequat duis enim velit mollit.
+                Exercitation veniam consequat sunt nostrud amet.
+              </span>
+              <div class="home-container02">
+                <button class="button-secondary button bg-transparent">
+                  Learn more
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        -->
+        <div class="home-section1 section-container">
+          <div class="home-max-width3 max-width">
+            <div class="home-content2">
+              <span class="home-text16 before-Heading">Avoid the hassles</span>
+              <h1 class="home-text17">
+                <span class="home-text18">Book Online</span>
+                <br />
+                <span class="home-text20">Get Reminders and Notifications</span>
+              </h1>
+              <span class="home-text21">
+                Avoid the hassles of falling in line, time consuming trips,
+                and unadvised schedule cancellations.
+              </span>
+              <div class="home-container03">
+                <button class="button-secondary button bg-transparent">
+                  Book Now
+                </button>
+              </div>
+            </div>
+            <div class="home-image4">
+              <img
+                alt="image"
+                src="{{url_for('static', filename='assets/section2_hero.png')}}"
+                class="home-hero-image2"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="home-section2 section-container">
+          <div class="home-max-width4 max-width">
+            <div class="home-image5">
+              <img
+                alt="image"
+                src="{{url_for('static', filename='assets/section3_hero.png')}}"
+                class="home-hero-image3"
+              />
+            </div>
+            <div class="home-content3">
+              <span class="home-text22 before-Heading">get started</span>
+              <h1 class="home-text23">Easy as 1 - 2 - 3</h1>
+              <div class="home-step">
+                <div class="home-number">
+                  <span class="home-text24">1</span>
+                </div>
+                <div class="home-container04">
+                  <span class="home-title1">Choose your preffered date</span>
+                  <span class="home-text25">
+                    Choose the best date you preffer to book in our doctors.
+                  </span>
+                </div>
+              </div>
+              <div class="home-step1">
+                <div class="home-number1">
+                  <span class="home-text26">2</span>
+                </div>
+                <div class="home-container05">
+                  <span class="home-title2">Book</span>
+                  <span class="home-text27">
+                    Fill up booking form
+                  </span>
+                </div>
+              </div>
+              <div class="home-step2">
+                <div class="home-number2">
+                  <span class="home-text28">3</span>
+                </div>
+                <div class="home-container06">
+                  <span class="home-title3">
+                    Get Notifications and Reminders
+                  </span>
+                  <span class="home-text29">
+                    Get real time Notifications and Reminders regarding your bookings.
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!--
+        <div class="section-container">
+          <div class="home-max-width5 max-width">
+            <span class="home-text30 before-Heading">get started</span>
+            <h1 class="home-text31">
+              <span>No matter what you do,</span>
+              <br />
+              <span>UpStart will save you money</span>
+            </h1>
+            <div class="home-cards-container">
+              <div class="card-card card-root-class-name2">
+                <div class="card-info">
+                  <span class="card-text"><span>Business</span></span>
+                  <span class="card-text1">
+                    <span>
+                      Amet minim mollit non deserunt ullamco est sit aliqua
+                      dolor do.
+                    </span>
+                  </span>
+                </div>
+              </div>
+              <div class="card-card card-root-class-name">
+                <div class="card-info">
+                  <span class="card-text"><span>Personal</span></span>
+                  <span class="card-text1">
+                    <span>
+                      Amet minim mollit non deserunt ullamco est sit aliqua
+                      dolor do.
+                    </span>
+                  </span>
+                </div>
+              </div>
+              <div class="card-card card-root-class-name1">
+                <div class="card-info">
+                  <span class="card-text"><span>Family</span></span>
+                  <span class="card-text1">
+                    <span>
+                      Amet minim mollit non deserunt ullamco est sit aliqua
+                      dolor do.
+                    </span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="home-section4 section-container">
+          <div class="home-max-width6 max-width">
+            <div class="home-f-a-q">
+              <div class="home-questions">
+                <span class="home-text34 before-Heading">faq</span>
+                <h1 class="home-text35">
+                  <span class="home-text36">Frequently Asked</span>
+                  <br />
+                  <span class="home-text38">Questions</span>
+                </h1>
+                <div data-role="Accordion" class="question">
+                  <div data-type="accordion-header" class="home-trigger">
+                    <span class="home-text39">
+                      Is this a Free or Paid service?
+                    </span>
+                    <svg viewBox="0 0 1024 1024" class="home-icon02">
+                      <path
+                        d="M810 554h-256v256h-84v-256h-256v-84h256v-256h84v256h256v84z"
+                      ></path>
+                    </svg>
+                  </div>
+                  <div data-type="accordion-content" class="question-content">
+                    <span class="home-text40">
+                      Amet minim mollit non deserunt ullamco est sit aliqua
+                      dolor do amet sint. Velit officia consequat duis enim
+                      velit mollit.
+                    </span>
+                  </div>
+                </div>
+                <div data-role="Accordion" class="question">
+                  <div data-type="accordion-header" class="home-trigger1">
+                    <span class="home-text41">
+                      Do you operate in United Stated?
+                    </span>
+                    <svg viewBox="0 0 1024 1024" class="home-icon04">
+                      <path
+                        d="M810 554h-256v256h-84v-256h-256v-84h256v-256h84v256h256v84z"
+                      ></path>
+                    </svg>
+                  </div>
+                  <div data-type="accordion-content" class="question-content">
+                    <span class="home-text42">
+                      Amet minim mollit non deserunt ullamco est sit aliqua
+                      dolor do amet sint. Velit officia consequat duis enim
+                      velit mollit.
+                    </span>
+                  </div>
+                </div>
+                <div data-role="Accordion" class="question">
+                  <div data-type="accordion-header" class="home-trigger2">
+                    <span class="home-text43">
+                      Is this a globally available bank?
+                    </span>
+                    <svg viewBox="0 0 1024 1024" class="home-icon06">
+                      <path
+                        d="M810 554h-256v256h-84v-256h-256v-84h256v-256h84v256h256v84z"
+                      ></path>
+                    </svg>
+                  </div>
+                  <div data-type="accordion-content" class="question-content">
+                    <span class="home-text44">
+                      Amet minim mollit non deserunt ullamco est sit aliqua
+                      dolor do amet sint. Velit officia consequat duis enim
+                      velit mollit.
+                    </span>
+                  </div>
+                </div>
+                <div data-role="Accordion" class="question">
+                  <div data-type="accordion-header" class="home-trigger3">
+                    <span class="home-text45">
+                      Do you have an iOS or Android app?
+                    </span>
+                    <svg viewBox="0 0 1024 1024" class="home-icon08">
+                      <path
+                        d="M810 554h-256v256h-84v-256h-256v-84h256v-256h84v256h256v84z"
+                      ></path>
+                    </svg>
+                  </div>
+                  <div data-type="accordion-content" class="question-content">
+                    <span class="home-text46">
+                      Amet minim mollit non deserunt ullamco est sit aliqua
+                      dolor do amet sint. Velit officia consequat duis enim
+                      velit mollit.
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <img
+                alt="image"
+                src="public/playground_assets/group%202-1200w.png"
+                class="home-image6"
+              />
+            </div>
+            <div class="home-banner">
+              <span class="home-text47 before-Heading">get started</span>
+              <h1 class="home-text48">
+                <span>Push your finances to</span>
+                <br />
+                <span></span>
+                <span></span>
+                <span>the next level.</span>
+              </h1>
+              <span class="home-text54">
+                <span>Amet minim mollit non deserunt ullamco est sit</span>
+                <br />
+                <span>aliqua dolor do amet sint.</span>
+              </span>
+              <div class="home-btns">
+                <button class="home-button6 button button-transparent">
+                  See all plans
+                </button>
+                <button class="home-button7 button button-gradient">
+                  Get started
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <footer class="home-footer">
+          <div class="home-links-container">
+            <div class="home-container07">
+              <div class="footer-column">
+                <span class="home-text58">Product</span>
+                <span class="home-text59">How it works</span>
+                <span class="home-text60">Features</span>
+                <span class="home-text61">Pricing</span>
+                <span class="home-text62">Blog</span>
+                <span>FAQ</span>
+              </div>
+              <div class="footer-column">
+                <span class="home-text64">App</span>
+                <span class="home-text65">Download iOS app</span>
+                <span class="home-text66">Download Android app</span>
+                <span class="home-text67">Log in to Portal</span>
+                <span class="home-text68">Administrative</span>
+                <span>Legal</span>
+              </div>
+              <div class="footer-column">
+                <span class="home-text70">Company</span>
+                <span class="home-text71">About us</span>
+                <span class="home-text72">Culture</span>
+                <span class="home-text73">Code of conduct</span>
+                <span class="home-text74">Careers</span>
+                <span class="home-text75">News</span>
+                <span>Contact</span>
+              </div>
+              <div class="footer-column">
+                <span class="home-text77">Invest</span>
+                <span class="home-text78">Commodity</span>
+                <span class="home-text79">Savings</span>
+                <span class="home-text80">
+                  <span>Taxes and fees</span>
+                  <br />
+                  <span></span>
+                </span>
+                <span class="home-text83"><span>Currency exchange</span></span>
+                <span>Community</span>
+              </div>
+              <div class="footer-column">
+                <span class="home-text86">Security</span>
+                <span class="home-text87">Security status</span>
+                <span class="home-text88">ISO</span>
+                <span class="home-text89">System status</span>
+                <span>Customer Help</span>
+              </div>
+              <div class="footer-column">
+                <span class="home-text91">Follow</span>
+                <span class="home-text92">Instagram</span>
+                <span class="home-text93">Twitter</span>
+                <span class="home-text94">Facebook</span>
+                <span class="home-text95">Tik Tok</span>
+                <span class="home-text96">Linkedln</span>
+                <span>Youtube</span>
+              </div>
+            </div>
+          </div>
+        </footer>
+        -->
+      </div>
+    </div>
+    <script>
+      window.onload = () => {
+        const runAllScripts = () => {
+          initializeAllAccordions()
+        }
+
+        const listenForUrlChanges = () => {
+          let url = location.href
+          document.body.addEventListener(
+            'click',
+            () => {
+              requestAnimationFrame(() => {
+                if (url !== location.href) {
+                  runAllScripts()
+                  url = location.href
+                }
+              })
+            },
+            true
+          )
+        }
+
+        const initializeAllAccordions = () => {
+          const allAccordions = document.querySelectorAll('[data-role="Accordion"]');
+
+          allAccordions.forEach((accordion) => {
+            const accordionHeader = accordion.querySelector('[data-type="accordion-header"]')
+            const accordionContent = accordion.querySelector('[data-type="accordion-content"]')
+
+            accordionHeader.addEventListener('click', () => {
+              if (accordionContent.style.maxHeight) {
+                accordionContent.style.maxHeight = ''
+              } else {
+                accordionContent.style.maxHeight = `${accordionContent.scrollHeight}px`
+              }
+            })
+          })
+        }
+
+        listenForUrlChanges()
+        runAllScripts()
+      }
+    </script>
+
+    <script>
+    function myFunction() {
+      var x = document.getElementById("myTopnav");
+      if (x.className === "topnav") {
+        x.className += " responsive";
+      } else {
+        x.className = "topnav";
+      }
+    }
+    </script>
+
+  </body>
+</html>
