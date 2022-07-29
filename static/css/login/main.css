@@ -6,23 +6,28 @@
 [ FONT ]*/
 
 @font-face {
-  font-family: Poppins-Regular;
-  src: url('../fonts/poppins/Poppins-Regular.ttf');
+  font-family: Poppins-Medium;
+  src: url('/static/fonts/poppins/Poppins-Medium.otf');
 }
 
 @font-face {
   font-family: Poppins-Medium;
-  src: url('../fonts/poppins/Poppins-Medium.ttf');
+  src: url('/static/fonts/poppins/Poppins-Medium.otf');
 }
 
 @font-face {
   font-family: Poppins-Bold;
-  src: url('../fonts/poppins/Poppins-Bold.ttf');
+  src: url('/static/fonts/poppins/Poppins-Bold.otf');
 }
 
 @font-face {
   font-family: Poppins-SemiBold;
-  src: url('../fonts/poppins/Poppins-SemiBold.ttf');
+  src: url('/static/fonts/poppins/Poppins-SemiBold.otf');
+}
+
+@font-face {
+  font-family: Poppins-Regular;
+  src: url('/static/fonts/poppins/Poppins-Regular.otf');
 }
 
 
@@ -335,11 +340,14 @@ iframe {
   z-index: -1;
   width: 300%;
   height: 100%;
+  background: #105749;
+  /*
   background: #a64bf4;
   background: -webkit-linear-gradient(right, #00dbde, #fc00ff, #00dbde, #fc00ff);
   background: -o-linear-gradient(right, #00dbde, #fc00ff, #00dbde, #fc00ff);
   background: -moz-linear-gradient(right, #00dbde, #fc00ff, #00dbde, #fc00ff);
   background: linear-gradient(right, #00dbde, #fc00ff, #00dbde, #fc00ff);
+  */
   top: 0;
   left: -100%;
 
@@ -351,6 +359,7 @@ iframe {
 
 .login100-form-btn {
   font-family: Poppins-Medium;
+  src: url('/static/fonts/poppins/Poppins-Medium.otf') format('otf');
   font-size: 16px;
   color: #fff;
   line-height: 1.2;
@@ -473,4 +482,4 @@ iframe {
     padding-left: 15px;
     padding-right: 15px;
   }
-} 
+}
