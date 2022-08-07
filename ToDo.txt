@@ -1,0 +1,21 @@
+Logo - Done
+
+Background
+
+Login - Done
+
+Navigation
+
+Admin
+
+User
+
+Auto Age
+
+City, Clinic, Doctors, Submit Button
+
+
+
+
+
+https://hevodata.com/learn/flask-mysql/

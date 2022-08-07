@@ -1,14 +1,26 @@
 from flask import Flask, render_template, flash, redirect, url_for, session, request, logging, Response, Blueprint, jsonify
 from flask import render_template
 from datetime import timedelta
+from flask_mysqldb import MySQL
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'secret123'
+app.config['SECRET_KEY'] = 'nothingtoseehere'
+app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_USER'] = 'root'
+app.config['MYSQL_PASSWORD'] = 'root'
+app.config['MYSQL_DB'] = 'clinic_apointment'
 app.permanent_session_lifetime = timedelta(hours = 1)
+
+mysql = MySQL(app)
+
+
 
 @app.route('/')
 def home():
-	return render_template('index.html')
+	if 'username' in session:
+		return render_template('index.html')
+	else:
+		return redirect(url_for('login'))
 
 @app.route('/tab')
 def tab():
@@ -20,12 +32,21 @@ def login():
 	if request.method == "POST":
 		username = request.form['username']
 		password = request.form['pass']
-		if username == 'admin' and password == '123':
-			return redirect(url_for('home'))
-		else:
-			return render_template('login.html')
+
+		cursor = mysql.connection.cursor()
+		cursor.execute("select * from accounts where username = '{username}' and password = '{password}'".format(username = username, password = password))
+		account = cursor.fetchall()
+		for row in account:
+			print(len(account))
+			if len(account) == 1:
+				session['username'] = username
+				return redirect(url_for('home'))
+			else:
+				return render_template('Login.html')
 	else:
-		return render_template('login.html')
+		return render_template('Login.html')
+
+
 
 if __name__ == '__main__':
 	app.run(debug=True, host = '0.0.0.0')
