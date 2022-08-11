@@ -15,7 +15,7 @@ app.permanent_session_lifetime = timedelta(hours = 1)
 mysql = MySQL(app)
 
 
-
+#Landing Page
 @app.route('/')
 def home():
 	if 'username' in session:
@@ -23,19 +23,7 @@ def home():
 	else:
 		return redirect(url_for('login'))
 
-@app.route('/tab')
-def tab():
-	return render_template('main.html')
-
-@app.route('/admin')
-def admin():
-	return render_template('admin.html', active = '')
-
-@app.route('/land')
-def land():
-	return render_template('landing.html')
-
-# Login
+# Login for Admin
 @app.route('/login', methods = ['POST', 'GET'])
 def login():
 	if request.method == "POST":
@@ -56,6 +44,29 @@ def login():
 		return redirect(url_for('login'))
 	else:
 		return render_template('login.html')
+
+#Admin View
+@app.route('/admin')
+def admin():
+	return render_template('admin.html', active = '')
+
+
+'''
+@app.route('/tab')
+def tab():
+	return render_template('main.html')
+
+@app.route('/land')
+def land():
+	return render_template('landing.html')
+'''
+
+
+
+
+
+
+
 
 
 

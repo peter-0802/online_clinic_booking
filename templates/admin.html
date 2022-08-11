@@ -40,19 +40,56 @@
             <ul class="menu">
               <li class="sidebar-title">Menu</li>
                 <li class="sidebar-item has-sub">
+                  <a href="#" class="sidebar-link">
+                    <i class="fa fa-calendar-o" aria-hidden="true"></i>
+                    <span>Appointments</span>
+                  </a>
+                  <ul class="submenu">
+                    <li class="submenu-item">
+                      <a href="" data-bs-toggle="modal" data-bs-target="#doctorsform">View List</a>
+                    </li>
+                  </ul>
+                </li>
+
+                <li class="sidebar-item has-sub">
                 <a href="#" class="sidebar-link">
                   <i class="fa fa-user-md" aria-hidden="true"></i>
                   <span>Doctors</span>
                 </a>
                 <ul class="submenu">
                   <li class="submenu-item">
-                    <a href="" data-bs-toggle="modal" data-bs-target="#doctorsform">Add</a>
+                    <a href="" data-bs-toggle="modal" data-bs-target="#doctorsform">View List</a>
+                  </li>
+                </ul>
+              </li>
+
+              <li class="sidebar-item has-sub">
+                <a href="#" class="sidebar-link">
+                  <i class="fa fa-users" aria-hidden="true"></i>
+                  <span>Patients</span>
+                </a>
+                <ul class="submenu">
+                  <li class="submenu-item">
+                    <a href="" data-bs-toggle="modal" data-bs-target="#doctorsform">View List</a>
+                  </li>
+                </ul>
+              </li>
+
+              <li class="sidebar-item has-sub">
+                <a href="#" class="sidebar-link">
+                  <i class="fa fa-bell-o" aria-hidden="true"></i>
+                  <span>Reminders</span>
+                </a>
+                <ul class="submenu">
+                  <li class="submenu-item">
+                    <a href="" data-bs-toggle="modal" data-bs-target="#doctorsform">View List</a>
                   </li>
                 </ul>
               </li>
             </ul>
           </div>
         </div>
+
         <!--START - Modal for Doctors-->
         <div class="modal fade text-left" id="doctorsform" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
@@ -92,6 +129,7 @@
           </div>
         </div>
         <!--END - Modal for Doctors-->
+
       </div>
 
       <div id="main">
