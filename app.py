@@ -2,7 +2,7 @@ from multiprocessing.dummy import active_children
 from flask import Flask, render_template, flash, redirect, url_for, session, request, logging, Response, Blueprint, jsonify
 from flask import render_template
 from datetime import timedelta
-from flask_mysqldb import MySQL
+#from flask_mysqldb import MySQL
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'nothingtoseehere'
@@ -30,6 +30,31 @@ def login():
 		username = request.form['username']
 		password = request.form['pass']
 
+		#cursor = mysql.connection.cursor()
+		#cursor.execute("select * from accounts where username = '{username}' and password = '{password}'".format(username = username, password = password))
+		
+		if username == 'admin' and password == 'admin':
+			session['username'] = username
+			return redirect(url_for('admin'))
+		else:
+			return redirect(url_for('login'))
+
+	else:
+		return render_template('login.html')
+
+#Admin View
+@app.route('/admin')
+def admin():
+	return render_template('admin.html', active = '')
+
+
+'''
+@app.route('/login', methods = ['POST', 'GET'])
+def login():
+	if request.method == "POST":
+		username = request.form['username']
+		password = request.form['pass']
+
 		cursor = mysql.connection.cursor()
 		cursor.execute("select * from accounts where username = '{username}' and password = '{password}'".format(username = username, password = password))
 		account = cursor.fetchall()
@@ -45,13 +70,6 @@ def login():
 	else:
 		return render_template('login.html')
 
-#Admin View
-@app.route('/admin')
-def admin():
-	return render_template('admin.html', active = '')
-
-
-'''
 @app.route('/tab')
 def tab():
 	return render_template('main.html')
@@ -60,15 +78,6 @@ def tab():
 def land():
 	return render_template('landing.html')
 '''
-
-
-
-
-
-
-
-
-
 
 if __name__ == '__main__':
 	app.run(debug=True, host = '0.0.0.0')
