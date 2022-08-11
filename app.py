@@ -1,3 +1,4 @@
+from multiprocessing.dummy import active_children
 from flask import Flask, render_template, flash, redirect, url_for, session, request, logging, Response, Blueprint, jsonify
 from flask import render_template
 from datetime import timedelta
@@ -26,6 +27,14 @@ def home():
 def tab():
 	return render_template('main.html')
 
+@app.route('/admin')
+def admin():
+	return render_template('admin.html', active = '')
+
+@app.route('/land')
+def land():
+	return render_template('landing.html')
+
 # Login
 @app.route('/login', methods = ['POST', 'GET'])
 def login():
@@ -37,14 +46,16 @@ def login():
 		cursor.execute("select * from accounts where username = '{username}' and password = '{password}'".format(username = username, password = password))
 		account = cursor.fetchall()
 		for row in account:
-			print(len(account))
 			if len(account) == 1:
+				#print(len(account))
 				session['username'] = username
-				return redirect(url_for('home'))
+				return redirect(url_for('admin'))
 			else:
-				return render_template('Login.html')
+				return redirect(url_for('login'))
+
+		return redirect(url_for('login'))
 	else:
-		return render_template('Login.html')
+		return render_template('login.html')
 
 
 

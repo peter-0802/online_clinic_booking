@@ -2,7 +2,7 @@
 
 <html lang="en">
   <head>
-    <title>Online Clicic Booking</title>
+    <title>Online Clinic Booking</title>
     <meta property="og:title" content="Up Start Finance" />
     <meta property="twitter:card" content="summary_large_image" />
     <meta charset="utf-8" />
@@ -50,19 +50,21 @@
 
     <!--<link rel="stylesheet" href="./style.css" />-->
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/style.css') }}">
+
   </head>
   <body>
     <div>
       <!--<link href="./home.css" rel="stylesheet" />-->
       <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/home.css') }}">
       <div class="home-container">
-        <div class="navbar-container">
+        
+                  <div class="navbar-container">
           <div class="max-width">
             <div class="home-logo">
               <img
               style="width: 70px; height: 70px;"
                 alt="image"
-                src="{{url_for('static', filename='assets/logoB.png')}}"
+                src="{{url_for('static', filename='assets/logoD.png')}}"
                 class="home-image"
               />
               <span class="brand-Name">
@@ -71,24 +73,22 @@
               </span>
             </div>
             <div class="home-links">
-              <!--
-              <span class="home-text03 navbar-Link">How it works</span>
-              <span class="home-text04 navbar-Link">Features</span>
-              <span class="home-text05 navbar-Link">Blog</span>
-              <span class="home-text06 navbar-Link">Pricing</span>
-            -->
-              <button class="button-secondary button">Log In</button>
-              <button class="button button-primary">About Us</button>
-            </div>
-            <div class="apt_nav home-burger-menu navbar-burger-menu">
-              <svg viewBox="0 0 1024 1024" class="home-icon">
-                <path
-                  d="M128 256h768v86h-768v-86zM128 554v-84h768v84h-768zM128 768v-86h768v86h-768z"
-                ></path>
-              </svg>
-            </div>
+            
+            <a href="/login"><button class="button-secondary button">Log In</button></a>
+            <!--<button class="button button-primary">About Us</button>-->
+          </div>
+          <div class="apt_nav home-burger-menu navbar-burger-menu">
+            <svg viewBox="0 0 1024 1024" class="home-icon">
+              <path
+                d="M128 256h768v86h-768v-86zM128 554v-84h768v84h-768zM128 768v-86h768v86h-768z"
+              ></path>
+            </svg>
           </div>
         </div>
+      </div>
+   
+
+
         <div class="hero-container section-container">
           <div class="home-max-width1 max-width">
             <div class="home-content">
@@ -130,7 +130,10 @@
             </div>
           </div>
         </div>
+
+       
         <!--
+
         <div class="section-container">
           <div class="home-max-width2 max-width">
             <div class="home-image3">
@@ -141,7 +144,6 @@
               />
             </div>
 
-            this is the 2nd section
             <div class="home-content1">
               <span class="home-text09 before-Heading">how it works</span>
               <h1 class="home-text10">
@@ -164,6 +166,10 @@
           </div>
         </div>
         -->
+
+     
+        
+
         <div class="home-section1 section-container">
           <div class="home-max-width3 max-width">
             <div class="home-content2">
@@ -407,6 +413,7 @@
             </div>
           </div>
         </div>
+       
         <footer class="home-footer">
           <div class="home-links-container">
             <div class="home-container07">
@@ -466,9 +473,14 @@
             </div>
           </div>
         </footer>
-        -->
+        
       </div>
     </div>
+     -->
+
+
+    <!--
+ 
     <script>
       window.onload = () => {
         const runAllScripts = () => {
@@ -512,17 +524,8 @@
         runAllScripts()
       }
     </script>
-
-    <script>
-    function myFunction() {
-      var x = document.getElementById("myTopnav");
-      if (x.className === "topnav") {
-        x.className += " responsive";
-      } else {
-        x.className = "topnav";
-      }
-    }
-    </script>
+     
+    -->
 
   </body>
 </html>
