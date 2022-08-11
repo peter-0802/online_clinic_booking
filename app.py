@@ -12,7 +12,7 @@ app.config['MYSQL_PASSWORD'] = 'root'
 app.config['MYSQL_DB'] = 'clinic_apointment'
 app.permanent_session_lifetime = timedelta(hours = 1)
 
-mysql = MySQL(app)
+#mysql = MySQL(app)
 
 
 #Landing Page
