@@ -18,10 +18,9 @@ app.permanent_session_lifetime = timedelta(hours = 1)
 #Landing Page
 @app.route('/')
 def home():
-	if 'username' in session:
-		return render_template('index.html')
-	else:
-		return redirect(url_for('login'))
+	return render_template('index.html')
+	#else:
+	#	return redirect(url_for('login'))
 
 # Login for Admin
 @app.route('/login', methods = ['POST', 'GET'])
