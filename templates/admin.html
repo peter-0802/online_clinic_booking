@@ -5,7 +5,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dashboard - Mazer Admin Dashboard</title>
+    <title>TCC Online | Login</title>
 
     <link rel="stylesheet" href="https://zuramai.github.io/mazer/demo/assets/css/main/app.css" />
     <link rel="stylesheet" href="https://zuramai.github.io/mazer/demo/assets/css/main/app-dark.css" />
@@ -31,7 +31,7 @@
           <div class="sidebar-header position-relative">
             <div class="d-flex justify-content-between align-items-center">
               <div style = "margin-bottom: -40px;" class="logo">
-                <a href="index.html"><img style="width: 80px; height: 80px; margin-left: 75px;"src="{{url_for('static', filename='assets/logoD.png')}}" alt="Logo" srcset=""/></a>
+                <a href="/"><img style="width: 80px; height: 80px; margin-left: 75px;"src="{{url_for('static', filename='assets/logoD.png')}}" alt="Logo" srcset=""/></a>
                 <p class="sidebar-title" style="font-size: 20px;">The Confidentiality Clinic</p> 
               </div>
             </div>
@@ -58,7 +58,7 @@
                 </a>
                 <ul class="submenu">
                   <li class="submenu-item">
-                    <a href="" data-bs-toggle="modal" data-bs-target="#doctorsform">Add</a>
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#doctorsform">Add</a>
                   </li>
                 </ul>
               </li>
@@ -70,7 +70,7 @@
                 </a>
                 <ul class="submenu">
                   <li class="submenu-item">
-                    <a href="" data-bs-toggle="modal" data-bs-target="">Add</a>
+                    <a href="" data-bs-toggle="modal" data-bs-target="#patientsform">Add</a>
                   </li>
                 </ul>
               </li>
@@ -98,31 +98,32 @@
                 <h4 class="modal-title" id="myModalLabel33">Add a doctor on the list</h4>
                   <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><i data-feather="x"></i></button>
               </div>
-              <form action="#">
+              <form action="/add_doc" method="POST" name = "doctors_form">
                 <div class="modal-body">  
                   <label>Title: </label>
                     <div class="form-group">
-                      <select class="form-select" id="basicSelect" required>
+                      <select class="form-select" id="basicSelect" name = "title" required>
                         <option>Dr.</option>
                       </select>
                     </div>
 
                   <label>Last Name: </label>
                     <div class="form-group">
-                      <input type="text" placeholder="Last Name" class="form-control" required/>
+                      <input type="text" placeholder="Last Name" class="form-control" name = "lastname" required/>
                     </div>
                   <label>First Name: </label>
                     <div class="form-group">
-                      <input type="text" placeholder="First Name" class="form-control" required/>
+                      <input type="text" placeholder="First Name" class="form-control" name = "firstname" required/>
                     </div>
                   <label>Field: </label>
                     <div class="form-group">
-                      <input type="text" placeholder="Field" class="form-control" required/>
+                      <input type="text" placeholder="Field" class="form-control" name = "field" required/>
                     </div>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal"><i class="bx bx-x d-block d-sm-none"></i><span class="d-none d-sm-block">Close</span></button>
-                  <button type="button" class="btn btn-primary ml-1" data-bs-dismiss="modal"><i class="bx bx-check d-block d-sm-none"></i><span class="d-none d-sm-block">Add</span></button>
+                  <!--<button type="submit" class="btn btn-primary ml-1" data-bs-dismiss="modal"><i class="bx bx-check d-block d-sm-none"></i><span class="d-none d-sm-block">Add</span></button>-->
+                  <input class="btn btn-primary ml-1" type="submit" value="submit" name = "doc">
                 </div>
               </form>
             </div>
@@ -130,15 +131,15 @@
         </div>
         <!--END - Modal for Doctors-->
 
-        <!--START - Modal for Doctors-->
-        <div class="modal fade text-left" id="doctorsform" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33" aria-hidden="true">
+        <!--START - Modal for Patient-->
+        <div class="modal fade text-left" id="patientsform" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel33">Add a doctor on the list</h4>
+                <h4 class="modal-title" id="myModalLabel33">Add a patient on the list</h4>
                   <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><i data-feather="x"></i></button>
               </div>
-              <form action="#">
+              <form action="/add_pat" method = "POST", name = "patients_form">
                 <div class="modal-body">  
                   <label>Title: </label>
                     <div class="form-group">
@@ -149,11 +150,11 @@
 
                   <label>Last Name: </label>
                     <div class="form-group">
-                      <input type="text" placeholder="Last Name" class="form-control" required/>
+                      <input type="text" placeholder="Last Name" class="form-control" name = "patient1" required/>
                     </div>
                   <label>First Name: </label>
                     <div class="form-group">
-                      <input type="text" placeholder="First Name" class="form-control" required/>
+                      <input type="text" placeholder="First Name" class="form-control" name = "patient2" required/>
                     </div>
                   <label>Field: </label>
                     <div class="form-group">
@@ -162,13 +163,14 @@
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal"><i class="bx bx-x d-block d-sm-none"></i><span class="d-none d-sm-block">Close</span></button>
-                  <button type="button" class="btn btn-primary ml-1" data-bs-dismiss="modal"><i class="bx bx-check d-block d-sm-none"></i><span class="d-none d-sm-block">Add</span></button>
+                  <!--<button type="button" class="btn btn-primary ml-1" data-bs-dismiss="modal"><i class="bx bx-check d-block d-sm-none"></i><span class="d-none d-sm-block">Add</span></button>-->
+                  <input class="btn btn-primary ml-1" type="submit" value="submit" name="pat">
                 </div>
               </form>
             </div>
           </div>
         </div>
-        <!--END - Modal for Doctors-->
+        <!--END - Modal for Patient-->
         
 
       </div>

@@ -2,7 +2,7 @@
 
 <html lang="en">
   <head>
-    <title>Online Clinic Booking</title>
+    <title>TCC | Home</title>
     <meta property="og:title" content="Up Start Finance" />
     <meta property="twitter:card" content="summary_large_image" />
     <meta charset="utf-8" />
@@ -48,6 +48,23 @@
       data-tag="font"
     />
 
+    <!--CSS Modal-->
+    <link rel="stylesheet" href="https://zuramai.github.io/mazer/demo/assets/css/main/app.css" />
+    <link rel="stylesheet" href="https://zuramai.github.io/mazer/demo/assets/css/main/app-dark.css" />
+    <link
+      rel="shortcut icon"
+      href="assets/images/logo/favicon.svg"
+      type="image/x-icon"
+    />
+    <link
+      rel="shortcut icon"
+      href="https://zuramai.github.io/mazer/demo/assets/images/logo/favicon.png"
+      type="image/png"
+    />
+
+    <link rel="stylesheet" href="https://zuramai.github.io/mazer/demo/assets/css/shared/iconly.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!---->
     <!--<link rel="stylesheet" href="./style.css" />-->
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/style.css') }}">
 
@@ -107,7 +124,8 @@
                 <br>
               </span>
               <div class="home-container01">
-                <button class="button button-gradient">Book Now</button>
+                <a href="#"><button class="button button-gradient" data-bs-toggle="modal" data-bs-target="#doctorsform">Book Now</button></a>
+                
                 <button class="button button-transparent">Availability</button>
               </div>
             </div>
@@ -131,6 +149,53 @@
           </div>
         </div>
 
+        <!--START - Modal for booking-->
+        <div class="modal fade text-left" id="doctorsform" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel33">Set Appointment</h4>
+                  <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><i data-feather="x"></i></button>
+              </div>
+              <form action="/add_booking" method="POST" name = "doctors_form">
+                <div class="modal-body">  
+                  <label>Date: </label>
+                    <div class="form-group">
+                      <input type="date"  class="form-control" name = "date" required/>
+                    </div>
+                  <label>Last Name: </label>
+                    <div class="form-group">
+                      <input type="text" placeholder="Last Name" class="form-control" name = "lastname" required/>
+                    </div>
+                  <label>First Name: </label>
+                    <div class="form-group">
+                      <input type="text" placeholder="First Name" class="form-control" name = "firstname" required/>
+                    </div>
+                    <label>Email: </label>
+                    <div class="form-group">
+                      <input type="Email" placeholder="Email" class="form-control" name = "email" required/>
+                    </div>
+                  <label>Notes / Remarks: </label>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name = "notes"></textarea>
+                  <label>Doctor: </label>
+                  <div class="form-group">
+                    <select class="form-select" id="basicSelect" name = "doctor" required>
+                      {% for doc in doctors %}
+                        <OPTION >{{doc[0]}}</OPTION>
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal"><i class="bx bx-x d-block d-sm-none"></i><span class="d-none d-sm-block">Close</span></button>
+                  <!--<button type="submit" class="btn btn-primary ml-1" data-bs-dismiss="modal"><i class="bx bx-check d-block d-sm-none"></i><span class="d-none d-sm-block">Add</span></button>-->
+                  <input class="btn btn-primary ml-1" type="submit" value="submit" name = "doc">
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <!--END - Modal for booking-->
        
         <!--
 
@@ -526,6 +591,13 @@
     </script>
      
     -->
+  <!--Model JS-->
+  <script src="https://zuramai.github.io/mazer/demo/assets/js/bootstrap.js"></script>
+  <script src="https://zuramai.github.io/mazer/demo/assets/js/app.js"></script>
 
+  <!-- Need: Apexcharts -->
+  <script src="https://zuramai.github.io/mazer/demo/assets/extensions/apexcharts/apexcharts.min.js"></script>
+  <script src="https://zuramai.github.io/mazer/demo/assets/js/pages/dashboard.js"></script>
+  <!---->
   </body>
 </html>
