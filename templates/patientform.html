@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %}Committed Offense Archive{% endblock %}
+{% block content %}
+
+<div class="page-heading">
+    <h3>Manage Patient Records</h3>
+  </div>
+
+
+
+  <div class="page-content">
+    <section class="row">
+      <!-- Hoverable rows start -->
+    <section class="section">
+      <div class="row" id="table-hover-row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header" style="margin-bottom: -40px;">
+              <h4 class="card-title">Update Patient's Information</h4>
+            </div>
+            <div class="card-content">
+              <div class="card-body" style="margin-bottom: -10px;">
+                <p>
+                  Update Patient's information using this form, change basic info. like names and email address.
+                </p>
+              </div>
+
+              <div class="card">
+                <div class="card-header">
+                  <h4 class="card-title">Patient Form</h4>
+                </div>
+  
+                <div class="card-body">
+                    <form action="" method="POST" name = "doctors_form">
+                        <div class="modal-body">  
+        
+                          <label>Last Name: </label>
+                            <div class="form-group">
+                              <input type="text" placeholder="Last Name" class="form-control" name = "lastname" value = "{{lastname}}" required/>
+                            </div>
+                          <label>First Name: </label>
+                            <div class="form-group">
+                              <input type="text" placeholder="First Name" class="form-control" name = "firstname" value = "{{firstname}}" required/>
+                            </div>
+                          <label>Email: </label>
+                            <div class="form-group">
+                              <input type="text" placeholder="Email" class="form-control" name = "email" value = "{{email}}" required/>
+                            </div>
+                          <label>Mobile: </label>
+                            <div class="form-group">
+                              <input type="text" placeholder="mobile" class="form-control" name = "mobile" value = "{{mobile}}" required/>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                          <input style="width: 170px" class="btn btn-primary ml-1" type="submit" value="Update" name = "doc">
+                        </div>
+                      </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Hoverable rows end -->
+    </section>
+  </div>
+
+{% endblock %}
