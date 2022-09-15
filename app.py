@@ -199,10 +199,15 @@ def archive_pat(id):
 	mysql.connection.commit()
 	return redirect(url_for('patients'))
 
+######################################################################################################
+
 #booking
-@app.route('/book', methods = ['POST','GET'])
+@app.route('/bookings', methods = ['POST','GET'])
 def book():
-	return render_template('book.html')
+	cur = mysql.connection.cursor()
+	cur.execute("SELECT id, date, concat(lastname, ', ', firstname) `name`, email, number, notes, dr FROM appointments order by date desc")
+	appointments = cur.fetchall()
+	return render_template('appointmentslist.html', appointments = appointments)
 
 #Add booking
 @app.route('/add_booking', methods = ['POST','GET'])
@@ -230,7 +235,43 @@ def add_booking():
 
 		return redirect(url_for('home'))
 
+#Update Patients
+@app.route('/edit_booking/<id>', methods = ['POST', 'GET'])
+def edit_booking(id):
+	if request.method == 'POST':
+		date = request.form['date']
+		lastname = request.form['lastname']
+		firstname = request.form['firstname']
+		email = request.form['email']
+		mobile = request.form['mobile']
+		notes = request.form['notes']
+		doctor = request.form['doctor']
 
+		cursor = mysql.connection.cursor()
+		cursor.execute("""update appointments set date = '{date}', lastname = '{lastname}', firstname = '{firstname}', email = '{email}', number = '{mobile}', notes = '{notes}' , dr = '{doctor}' where id = '{id}'""".format(date = date, email = email, lastname = lastname, firstname = firstname, mobile = mobile, notes = notes, doctor = doctor, id = id))
+		mysql.connection.commit()
+
+		return redirect(url_for('book'))
+	else:
+		cur = mysql.connection.cursor()
+		cur.execute("""select * from appointments where id = '{id}'""".format(id = id))
+		appointments = cur.fetchall()
+		for appointment in appointments:
+			#print(isodoc)
+			pass
+		cur = mysql.connection.cursor()
+		cur.execute("""select concat(title, ' ', lastname) from doctors""")
+		doctors = cur.fetchall()
+		
+		return render_template('appointmentform.html', date = appointment[1], lastname = appointment[2], firstname = appointment[3], email = appointment[4], mobile = appointment[5], notes = appointment[6], doctor = appointment[7], doctors = doctors)
+
+#Delete Patients
+@app.route('/archive_booking/<id>', methods = ['GET'])
+def archive_booking(id):
+	cursor = mysql.connection.cursor()
+	cursor.execute("""delete from appointments where id = '{id}'""".format(id = id))
+	mysql.connection.commit()
+	return redirect(url_for('book'))
 		
 
 
