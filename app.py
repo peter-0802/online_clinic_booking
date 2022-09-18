@@ -279,13 +279,10 @@ def archive_booking(id):
 
 
 
-#booking
-@app.route('/test')
-def test():
-	mycursor = mydb.cursor()
-	mycursor.execute("SELECT title, concat(lastname, ', ', firstname) ,`field` FROM doctors")
-	myresult = mycursor.fetchall()
-	return render_template('test.html', doctors = myresult)
+#calendar
+@app.route('/calendar')
+def calendar():
+	return render_template('calendar.html')
 
 '''
 @app.route('/login', methods = ['POST', 'GET'])
