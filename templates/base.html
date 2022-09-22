@@ -4,7 +4,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TCC Online | Dashboard</title>
+    <title>{% block title %} TCC Online | Base {% endblock %}</title>
 
     <link rel="stylesheet" href="https://zuramai.github.io/mazer/demo/assets/css/main/app.css" />
     <link rel="stylesheet" href="https://zuramai.github.io/mazer/demo/assets/css/main/app-dark.css" />
@@ -19,9 +19,6 @@
     <link rel="stylesheet" href="https://zuramai.github.io/mazer/demo/assets/css/shared/iconly.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
-    
   </head>
 
   <body>
@@ -46,7 +43,13 @@
                   </a>
                   <ul class="submenu">
                     <li class="submenu-item">
-                      <a href="/bookings">View Appointments</a>
+                      <a href="/bookings">View All</a>
+                    </li>
+                    <li class="submenu-item">
+                      <a href="/pending_bookings">View Pending</a>
+                    </li>
+                    <li class="submenu-item">
+                      <a href="/approved_bookings">View Approved</a>
                     </li>
                   </ul>
                 </li>
@@ -82,17 +85,19 @@
               </li>
 
               <!--has-sub class is removed to rmove the down arrows-->
-              <li class="sidebar-item">
+              <!--
+                  <li class="sidebar-item">
                 <a href="#" class="sidebar-link">
                   <i class="fa fa-bell-o" aria-hidden="true"></i>
                   <span>Reminders</span>
                 </a>
                 <ul class="submenu">
                   <li class="submenu-item">
-                    <!-- <a href="" data-bs-toggle="modal" data-bs-target="">View Reminders</a> -->
                   </li>
                 </ul>
-              </li>
+              </li> 
+              -->
+              
 
               <li class="sidebar-item">
                 <a href="/logout" class="sidebar-link">

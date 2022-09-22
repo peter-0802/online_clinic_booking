@@ -1,9 +1,9 @@
 {% extends "base.html" %}
-{% block title %}Committed Offense Archive{% endblock %}
+{% block title %}TCC Online | Appointment Form{% endblock %}
 {% block content %}
 
 <div class="page-heading">
-    <h3>Manage Patient Records</h3>
+    <h3>Manage Appointment Records</h3>
   </div>
 
 
@@ -16,18 +16,18 @@
         <div class="col-12">
           <div class="card">
             <div class="card-header" style="margin-bottom: -40px;">
-              <h4 class="card-title">Update Patient's Information</h4>
+              <h4 class="card-title">Update Appointment Details</h4>
             </div>
             <div class="card-content">
               <div class="card-body" style="margin-bottom: -10px;">
                 <p>
-                  Update Patient's information using this form, change basic info. like names and email address.
+                  Update Appointment Details using this form.
                 </p>
               </div>
 
               <div class="card">
                 <div class="card-header">
-                  <h4 class="card-title">Patient Form</h4>
+                  <h4 class="card-title">Appointment Details</h4>
                 </div>
   
                 <div class="card-body">
@@ -36,6 +36,10 @@
                       <label>Date: </label>
                         <div class="form-group">
                           <input type="date"  class="form-control" name = "date" value = "{{date}}" required/>
+                        </div>
+                      <label>Time: (1hr per session only | e.g. 8:00am - 9:00am)</label>
+                        <div class="form-group">
+                          <input type="time"  class="form-control" name = "date" value = "{{time}}" required/>
                         </div>
                       <label>Last Name: </label>
                         <div class="form-group">

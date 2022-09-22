@@ -1,3 +1,4 @@
+from asyncio import events
 from dataclasses import field
 from multiprocessing.dummy import active_children
 from turtle import title
@@ -6,6 +7,7 @@ from flask import render_template
 from datetime import timedelta
 from flask_mysqldb import MySQL,MySQLdb
 import json
+import requests
 
 
 app = Flask(__name__)
@@ -17,6 +19,12 @@ app.config['MYSQL_DB'] = 'clinic_apointment'
 app.permanent_session_lifetime = timedelta(hours = 1)
 
 mysql = MySQL(app)
+
+#SMS Function here using Semaphore
+def semaphore(apikey, number, message):
+    payload = {'apikey': apikey, 'number': number, 'message': message}
+    response = requests.post("https://api.semaphore.co/api/v4/messages", data = payload)
+    print(response.json())
 
 
 #Landing Page
@@ -84,6 +92,51 @@ def admin():
 		pass
 
 		return render_template('admin.html', var_apointments = appointment[0], var_patients = patient[0], var_doctors = doctor[0])
+
+###################################################################################################################################
+
+#calendar
+@app.route('/calendar', methods = ['POST', 'GET'])
+def calendar():
+	if request.method == 'GET':
+		cur = mysql.connection.cursor()
+		cur.execute("SELECT concat(code, ' with doc.', dr, ' | ', notes), concat(date, ' ',time) FROM appointments where approve = 1")
+		#cur.execute("SELECT 'Session : SES1 with Dr. Gonzales', '2022-09-20 11:00:00', '2022-09-20 12:00:00' union all SELECT 'Session : SES78 with Dr. Juan', '2022-09-20 08:00:00', '2022-09-20 09:00:00'")
+		appointments = cur.fetchall()
+		return render_template('calendartest.html', appointments = appointments)
+
+	else:
+		code = request.form['session_code']
+		cur = mysql.connection.cursor()
+		cur.execute("SELECT concat(code, ' with doc.', dr, ' | ', notes), concat(date, ' ',time) FROM appointments where code = '{code}'".format(code = code))
+		appointments = cur.fetchall()
+		print(code)
+		return render_template('calendartest.html', appointments = appointments)
+	
+'''events = [
+		{
+		'todo' : 'Test',
+		'date' : '2022-09-10',
+		'end' : '2022-09-20',
+		},
+		{
+		'todo' : 'Test2',
+		'date' : '2022-09-21',
+		'end' : '2022-09-25',
+		},
+			]'''
+
+
+#calendar checker
+@app.route('/calcheck', methods = ['POST'])
+def calcheck():
+	code = request.form['session_code']
+	cur = mysql.connection.cursor()
+	cur.execute("SELECT date, concat('Session: ', code, ' with doc.', dr, ' | ', notes) FROM appointments where code = '{code}'".format(code = code))
+	appointments = cur.fetchall()
+	print(code)
+	return render_template('calendar.html', appointments = appointments)
+##################################################################################################################################
 
 #View Doctors
 @app.route('/doctors', methods = ['POST','GET'])
@@ -201,19 +254,36 @@ def archive_pat(id):
 
 ######################################################################################################
 
-#booking
+#pending bookings list
 @app.route('/bookings', methods = ['POST','GET'])
-def book():
+def bookings():
 	cur = mysql.connection.cursor()
-	cur.execute("SELECT id, date, concat(lastname, ', ', firstname) `name`, email, number, notes, dr FROM appointments order by date desc")
+	cur.execute("SELECT id, date, concat(lastname, ', ', firstname) `name`, email, number, notes, dr, IF(approve = '0', 'Pending', 'Approved') as status FROM appointments order by date desc")
 	appointments = cur.fetchall()
 	return render_template('appointmentslist.html', appointments = appointments)
+
+#approved bookings list
+@app.route('/approved_bookings', methods = ['POST','GET'])
+def approved_bookings():
+	cur = mysql.connection.cursor()
+	cur.execute("SELECT id, date, concat(lastname, ', ', firstname) `name`, email, number, notes, dr FROM appointments where approve = 1 order by date desc")
+	appointments = cur.fetchall()
+	return render_template('appointmentslist.html', appointments = appointments)
+
+#pending bookings list
+@app.route('/pending_bookings', methods = ['POST','GET'])
+def pending_bookings():
+	cur = mysql.connection.cursor()
+	cur.execute("SELECT id, date, concat(lastname, ', ', firstname) `name`, email, number, notes, dr FROM appointments where approve = 0 order by date desc")
+	appointments = cur.fetchall()
+	return render_template('appointmentlistpending.html', appointments = appointments)
 
 #Add booking
 @app.route('/add_booking', methods = ['POST','GET'])
 def add_booking():
 	if request.method == "POST":
 		date = request.form['date']
+		time = request.form['slottime']
 		lastname = request.form['lastname']
 		firstname = request.form['firstname']
 		email = request.form['email']
@@ -223,16 +293,27 @@ def add_booking():
 
 		cursor = mysql.connection.cursor()
 		cursor.execute("""insert into appointments
-					  (date, lastname, firstname, email, number, notes, dr)
+					  (date, time, code, lastname, firstname, email, number, notes, dr)
 					  values
-					  ('{date}', '{lastname}', '{firstname}', '{email}', '{mobile}', '{notes}', '{doctor}')""".format(date = date, lastname = lastname, firstname = firstname, email = email, mobile = mobile, notes = notes, doctor = doctor))
+					  ('{date}', '{time}',(select if (count(id) <= 0, 'SES1', concat('SES', max(id) + 1)) code from appointments as code), '{lastname}', '{firstname}', '{email}', '{mobile}', '{notes}', '{doctor}')""".format(date = date, time = time, lastname = lastname, firstname = firstname, email = email, mobile = mobile, notes = notes, doctor = doctor))
 
 		cursor.execute("""replace into patients
 					  (lastname, firstname, email, mobile)
 					  values
 					  ('{lastname}', '{firstname}', '{email}', '{mobile}')""".format(lastname = lastname, firstname = firstname, email = email, mobile = mobile))
+					  
 		mysql.connection.commit()
 
+		cur = mysql.connection.cursor()
+		cur.execute("SELECT code, concat(date, ' ', time), concat(lastname, ' ', firstname), number FROM appointments order by id desc limit 1")
+		appointments = cur.fetchall()
+		for appointment in appointments:
+			pass
+		#semaphore('e309b6a6c4d0a7e2a5d7afd5658f83d8', '09104698404', 'Hello, Im a test from TCC Online')
+		#print(appointment)
+		message = f"Hello {appointment[2]} Your session with code {appointment[0]} on {appointment[1]} is now booked, please wait for our confirmation."
+		#print(message)
+		#semaphore('e309b6a6c4d0a7e2a5d7afd5658f83d8',  appointment[3], message)
 		return redirect(url_for('home'))
 
 #Update Patients
@@ -251,7 +332,7 @@ def edit_booking(id):
 		cursor.execute("""update appointments set date = '{date}', lastname = '{lastname}', firstname = '{firstname}', email = '{email}', number = '{mobile}', notes = '{notes}' , dr = '{doctor}' where id = '{id}'""".format(date = date, email = email, lastname = lastname, firstname = firstname, mobile = mobile, notes = notes, doctor = doctor, id = id))
 		mysql.connection.commit()
 
-		return redirect(url_for('book'))
+		return redirect(url_for('bookings'))
 	else:
 		cur = mysql.connection.cursor()
 		cur.execute("""select * from appointments where id = '{id}'""".format(id = id))
@@ -263,7 +344,31 @@ def edit_booking(id):
 		cur.execute("""select concat(title, ' ', lastname) from doctors""")
 		doctors = cur.fetchall()
 		
-		return render_template('appointmentform.html', date = appointment[1], lastname = appointment[2], firstname = appointment[3], email = appointment[4], mobile = appointment[5], notes = appointment[6], doctor = appointment[7], doctors = doctors)
+		return render_template('appointmentform.html', date = appointment[1], time = appointment[2], lastname = appointment[4], firstname = appointment[5], email = appointment[6], mobile = appointment[7], notes = appointment[8], doctor = appointment[9], doctors = doctors)
+
+#approve booking
+@app.route('/approve/<id>', methods = ['GET'])
+def approve(id):
+	cursor = mysql.connection.cursor()
+	cursor.execute("""update appointments set approve = 1 where id = '{id}'""".format(id = id))
+	mysql.connection.commit()
+
+	cur = mysql.connection.cursor()
+	cur.execute("SELECT code, concat(date, ' ', time), concat(lastname, ' ', firstname), number FROM appointments where id = '{id}' order by id desc limit 1".format(id = id))
+	appointments = cur.fetchall()
+	for appointment in appointments:
+		pass
+	message = f"Hello {appointment[2]} Your session with code {appointment[0]}, has been confirmed by our Admin / Doctor"
+	#semaphore('e309b6a6c4d0a7e2a5d7afd5658f83d8',  appointment[3], message)
+	return redirect(url_for('bookings'))
+
+#Delete Patients
+@app.route('/cancel/<id>', methods = ['GET'])
+def cancel(id):
+	cursor = mysql.connection.cursor()
+	cursor.execute("""update appointments set approve = 0 where id = '{id}'""".format(id = id))
+	mysql.connection.commit()
+	return redirect(url_for('bookings'))
 
 #Delete Patients
 @app.route('/archive_booking/<id>', methods = ['GET'])
@@ -271,49 +376,8 @@ def archive_booking(id):
 	cursor = mysql.connection.cursor()
 	cursor.execute("""delete from appointments where id = '{id}'""".format(id = id))
 	mysql.connection.commit()
-	return redirect(url_for('book'))
+	return redirect(url_for('bookings'))
 		
-
-
-
-
-
-
-#calendar
-@app.route('/calendar')
-def calendar():
-	return render_template('calendar.html')
-
-'''
-@app.route('/login', methods = ['POST', 'GET'])
-def login():
-	if request.method == "POST":
-		username = request.form['username']
-		password = request.form['pass']
-
-		cursor = mysql.connection.cursor()
-		cursor.execute("select * from accounts where username = '{username}' and password = '{password}'".format(username = username, password = password))
-		account = cursor.fetchall()
-		for row in account:
-			if len(account) == 1:
-				#print(len(account))
-				session['username'] = username
-				return redirect(url_for('admin'))
-			else:
-				return redirect(url_for('login'))
-
-		return redirect(url_for('login'))
-	else:
-		return render_template('login.html')
-
-@app.route('/tab')
-def tab():
-	return render_template('main.html')
-
-@app.route('/land')
-def land():
-	return render_template('landing.html')
-'''
 
 if __name__ == '__main__':
 	app.run(debug=True, host = '0.0.0.0')

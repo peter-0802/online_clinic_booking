@@ -2,7 +2,7 @@
 
 <html lang="en">
   <head>
-    <title>TCC | Home</title>
+    <title>TCC Online | Home</title>
     <meta property="og:title" content="Up Start Finance" />
     <meta property="twitter:card" content="summary_large_image" />
     <meta charset="utf-8" />
@@ -126,7 +126,7 @@
               <div class="home-container01">
                 <a href="#"><button class="button button-gradient" data-bs-toggle="modal" data-bs-target="#doctorsform">Book Now</button></a>
                 
-                <a href="#"><button class="button button-transparent">Check My Appointment</button></a>
+                <a href="/calendar"><button class="button button-transparent">Check My Appointment</button></a>
               </div>
             </div>
             <div class="home-image1">
@@ -162,6 +162,10 @@
                   <label>Date: </label>
                     <div class="form-group">
                       <input type="date"  class="form-control" name = "date" required/>
+                    </div>
+                  <label>Time: (1hr per session only | e.g. 8:00am - 9:00am)</label>
+                    <div class="form-group">
+                      <input type="time"  class="form-control" name = "slottime" required/>
                     </div>
                   <label>Last Name: </label>
                     <div class="form-group">
@@ -253,7 +257,7 @@
                 and unadvised schedule cancellations.
               </span>
               <div class="home-container03">
-                <button class="button-secondary button bg-transparent">
+                <button class="button-secondary button bg-transparent" data-bs-toggle="modal" data-bs-target="#doctorsform">
                   Book Now
                 </button>
               </div>
