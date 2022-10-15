@@ -124,9 +124,12 @@
                 <br>
               </span>
               <div class="home-container01">
-                <a href="#"><button class="button button-gradient" data-bs-toggle="modal" data-bs-target="#doctorsform">Book Now</button></a>
-                
+                <!--
+                  <a href="#"><button class="button button-gradient" data-bs-toggle="modal" data-bs-target="#doctorsform">Book Now</button></a>
+                -->
+                <button id = "date" class="button button-gradient" onclick="redirect()">Book Now</button>
                 <a href="/calendar"><button class="button button-transparent">Check My Appointment</button></a>
+                
               </div>
             </div>
             <div class="home-image1">
@@ -599,6 +602,19 @@
     </script>
      
     -->
+
+    <script>
+      function redirect() {
+          var el = document.getElementById("date");
+          var today = new Date();
+          var dd = String(today.getDate()).padStart(2, '0');
+          var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+          var yyyy = today.getFullYear();
+
+          today = yyyy + '-' + mm + '-' + dd;
+              location.href = "/make_booking/"+today;
+      }
+      </script>
   <!--Model JS-->
   <script src="https://zuramai.github.io/mazer/demo/assets/js/bootstrap.js"></script>
   <script src="https://zuramai.github.io/mazer/demo/assets/js/app.js"></script>

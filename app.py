@@ -8,6 +8,7 @@ from datetime import timedelta
 from flask_mysqldb import MySQL,MySQLdb
 import json
 import requests
+from datetime import date
 
 
 app = Flask(__name__)
@@ -36,6 +37,20 @@ def home():
 	#print(doctors)
 	flash('Welcome',category="success")
 	return render_template('index.html', doctors = doctors)
+
+#book2 Page
+@app.route('/make_booking/<seldate>')
+def make_booking(seldate):
+	cursor = mysql.connection.cursor()
+	cursor.execute("select * from time_range where time not in(select time from appointments where date = '{seldate}')".format(seldate = seldate))
+	print("select * from time_range where time not in(select time from appointments where date = '{seldate}')".format(seldate = seldate))
+	times = cursor.fetchall()
+
+	cursor = mysql.connection.cursor()
+	cursor.execute("SELECT concat(title, ' ', lastname) `name` from doctors")
+	doctors = cursor.fetchall()
+	return render_template('makebooking.html', times = times, doctors = doctors)
+	
 
 # Login for Admin
 @app.route('/login', methods = ['POST', 'GET'])
