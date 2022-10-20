@@ -129,6 +129,24 @@
                   <input type="time"  class="form-control" name = "slottime" required/>
                 </div>
                 -->
+                <label>Date: </label>
+                      <div class="form-group">
+                        <input type="date" id = "date" class="form-control" name = "date" value="{{seldate}}" onchange="redirect()" required/>
+                      </div>
+                      
+                      <label>Time: </label>
+                      <div class="d-flex justify-content-center sched" name = "time" style="display: flex; flex-wrap: wrap;">
+                        {% for time in times %}
+                        <div class="form-check" style="padding-right: 50px;">
+                          <input class="form-check-input" type="radio" name="slottime" value="{{time[1]}}"/>
+                          <label id="retime" class="form-check-label">
+                            {{time[1]}}
+                          </label>
+                        </div>
+                        {% endfor %}
+                      </div>
+                      <hr>
+
               <label>Last Name: </label>
                 <div class="form-group">
                   <input type="text" placeholder="Last Name" class="form-control" name = "lastname" required/>
@@ -155,24 +173,7 @@
                   {% endfor %}
                 </select>
               </div>
-                    <label>Date: </label>
-                      <div class="form-group">
-                        <input type="date" id = "date" class="form-control" name = "date" onchange="redirect()" required/>
-                      </div>
-                      
-                      <label>Time: </label>
-                      <div class="d-flex justify-content-center sched" name = "time" style="display: flex; flex-wrap: wrap;">
-                        {% for time in times %}
-                        <div class="form-check" style="padding-right: 50px;">
-                          <input class="form-check-input" type="radio" name="slottime" value="{{time[1]}}"/>
-                          <label id="retime" class="form-check-label">
-                            {{time[1]}}
-                          </label>
-                        </div>
-                        
-                        {% endfor %}
-                      </div>
-                      <hr>
+                    
                       <input style="float: right;" class="btn btn-block btn-primary ml-1" type="submit" value="submit" name = "doc"> 
                 </div>
             </div>
@@ -186,7 +187,6 @@
         function redirect() {
             var el = document.getElementById("date");
                 location.href = "/make_booking/"+el.value;
-                alert(el.value);
         }
         </script>
   <!--Model JS-->

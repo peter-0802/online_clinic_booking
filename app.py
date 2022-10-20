@@ -4,11 +4,10 @@ from multiprocessing.dummy import active_children
 from turtle import title
 from flask import Flask, render_template, flash, redirect, url_for, session, request, logging, Response, Blueprint, jsonify
 from flask import render_template
-from datetime import timedelta
+from datetime import timedelta, date, datetime
 from flask_mysqldb import MySQL,MySQLdb
 import json
 import requests
-from datetime import date
 
 
 app = Flask(__name__)
@@ -40,16 +39,17 @@ def home():
 
 #book2 Page
 @app.route('/make_booking/<seldate>')
-def make_booking(seldate):
-	cursor = mysql.connection.cursor()
-	cursor.execute("select * from time_range where time not in(select time from appointments where date = '{seldate}')".format(seldate = seldate))
-	print("select * from time_range where time not in(select time from appointments where date = '{seldate}')".format(seldate = seldate))
-	times = cursor.fetchall()
+def make_booking(seldate = date.today()):
+		cursor = mysql.connection.cursor()
+		cursor.execute("select * from time_range where time not in(select time from appointments where date = '{seldate}')".format(seldate = seldate))
+		print("select * from time_range where time not in(select time from appointments where date = '{seldate}')".format(seldate = seldate))
+		times = cursor.fetchall()	
 
-	cursor = mysql.connection.cursor()
-	cursor.execute("SELECT concat(title, ' ', lastname) `name` from doctors")
-	doctors = cursor.fetchall()
-	return render_template('makebooking.html', times = times, doctors = doctors)
+		cursor = mysql.connection.cursor()
+		cursor.execute("SELECT concat(title, ' ', lastname) `name` from doctors")
+		doctors = cursor.fetchall()
+
+		return render_template('makebooking.html', times = times, doctors = doctors, seldate = seldate)
 	
 
 # Login for Admin
@@ -115,7 +115,7 @@ def admin():
 def calendar():
 	if request.method == 'GET':
 		cur = mysql.connection.cursor()
-		cur.execute("SELECT concat(code, ' with doc.', dr, ' | ', notes), concat(date, ' ',time) FROM appointments where approve = 1")
+		cur.execute("SELECT concat(code, ' with doc.', dr, ' | ', notes), concat(date, ' ',STR_TO_DATE(time, '%l:%i %p')) FROM appointments where approve = 1")
 		#cur.execute("SELECT 'Session : SES1 with Dr. Gonzales', '2022-09-20 11:00:00', '2022-09-20 12:00:00' union all SELECT 'Session : SES78 with Dr. Juan', '2022-09-20 08:00:00', '2022-09-20 09:00:00'")
 		appointments = cur.fetchall()
 		return render_template('calendartest.html', appointments = appointments)
@@ -123,7 +123,7 @@ def calendar():
 	else:
 		code = request.form['session_code']
 		cur = mysql.connection.cursor()
-		cur.execute("SELECT concat(code, ' with doc.', dr, ' | ', notes), concat(date, ' ',time) FROM appointments where code = '{code}'".format(code = code))
+		cur.execute("SELECT concat(code, ' with doc.', dr, ' | ', notes), concat(date, ' ',STR_TO_DATE(time, '%l:%i %p')) FROM appointments where approve = 1 and code = '{code}'".format(code = code))
 		appointments = cur.fetchall()
 		print(code)
 		return render_template('calendartest.html', appointments = appointments)
