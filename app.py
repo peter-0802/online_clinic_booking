@@ -20,13 +20,6 @@ app.permanent_session_lifetime = timedelta(hours = 1)
 
 mysql = MySQL(app)
 
-#SMS Function here using Semaphore
-def semaphore(apikey, number, message):
-    payload = {'apikey': apikey, 'number': number, 'message': message}
-    response = requests.post("https://api.semaphore.co/api/v4/messages", data = payload)
-    print(response.json())
-
-
 #Landing Page
 @app.route('/')
 def home():
@@ -38,19 +31,22 @@ def home():
 	return render_template('index.html', doctors = doctors)
 
 #book2 Page
-@app.route('/make_booking/<seldate>')
+@app.route('/make_booking/<seldate>', methods = ['POST', 'GET'])
 def make_booking(seldate = date.today()):
+	if request.method == "GET":
 		cursor = mysql.connection.cursor()
 		cursor.execute("select * from time_range where time not in(select time from appointments where date = '{seldate}')".format(seldate = seldate))
 		print("select * from time_range where time not in(select time from appointments where date = '{seldate}')".format(seldate = seldate))
 		times = cursor.fetchall()	
 
 		cursor = mysql.connection.cursor()
-		cursor.execute("SELECT concat(title, ' ', lastname) `name` from doctors")
+		cursor.execute("SELECT concat(title, ' ', lastname, ' | ', field) `name` from doctors")
 		doctors = cursor.fetchall()
 
 		return render_template('makebooking.html', times = times, doctors = doctors, seldate = seldate)
 	
+	else:
+		return 'asd'
 
 # Login for Admin
 @app.route('/login', methods = ['POST', 'GET'])
@@ -324,12 +320,11 @@ def add_booking():
 		appointments = cur.fetchall()
 		for appointment in appointments:
 			pass
-		#semaphore('e309b6a6c4d0a7e2a5d7afd5658f83d8', '09104698404', 'Hello, Im a test from TCC Online')
-		#print(appointment)
 		message = f"Hello {appointment[2]} Your session with code {appointment[0]} on {appointment[1]} is now booked, please wait for our confirmation."
-		#print(message)
-		#semaphore('e309b6a6c4d0a7e2a5d7afd5658f83d8',  appointment[3], message)
+		print(message)
 		return redirect(url_for('home'))
+	
+
 
 #Update Patients
 @app.route('/edit_booking/<id>', methods = ['POST', 'GET'])
@@ -374,7 +369,7 @@ def approve(id):
 	for appointment in appointments:
 		pass
 	message = f"Hello {appointment[2]} Your session with code {appointment[0]}, has been confirmed by our Admin / Doctor"
-	#semaphore('e309b6a6c4d0a7e2a5d7afd5658f83d8',  appointment[3], message)
+	print(message)
 	return redirect(url_for('bookings'))
 
 #Delete Patients

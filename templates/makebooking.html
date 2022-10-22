@@ -75,7 +75,7 @@
       <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/home.css') }}">
       <div class="home-container">
         
-        <div class="navbar-container">
+        <div class="navbar-container" style="margin-left: -210px;">
           <div class="max-width">
             <div class="home-logo">
                 <a href="/">
@@ -93,11 +93,7 @@
                 <span>Clinic</span>
               </span>
             </div>
-            <div class="home-links">
             
-            <a href="/login"><button class="button-secondary button">Log In</button></a>
-            <!--<button class="button button-primary">About Us</button>-->
-          </div>
           <div class="apt_nav home-burger-menu navbar-burger-menu">
             <svg viewBox="0 0 1024 1024" class="home-icon">
               <path
@@ -186,7 +182,12 @@
       <script>
         function redirect() {
             var el = document.getElementById("date");
-                location.href = "/make_booking/"+el.value;
+            
+            location.href = "/make_booking/"+el.value;
+
+            
+                
+
         }
         </script>
   <!--Model JS-->
