@@ -359,7 +359,7 @@ def approve(id):
 	appointments = cur.fetchall()
 	for appointment in appointments:
 		pass
-	message = f"Hello {appointment[2]} Your session:{appointment[0]}, has been confirmed."
+	message = f"Hello {appointment[2]} Your session:{appointment[0]} has been confirmed."
 	#message = f"{appointment[2]} {appointment[0]}"
 	print(message)
 	sender.semaphore(appointment[3], message)
