@@ -312,7 +312,7 @@ def add_booking():
 			pass
 		message = f"Hello {appointment[2]} Your session with code {appointment[0]} on {appointment[1]} is now booked, please wait for our confirmation."
 		print(message)
-		sender.semaphore(appointment[3]', message)
+		sender.semaphore(appointment[3], message)
 		return redirect(url_for('home'))
 	
 
@@ -361,7 +361,7 @@ def approve(id):
 		pass
 	message = f"Hello {appointment[2]} Your session with code {appointment[0]}, has been confirmed by our Admin / Doctor. Please do come in time."
 	print(message)
-	sender.semaphore(appointment[3]', message)
+	sender.semaphore(appointment[3], message)
 	return redirect(url_for('bookings'))
 
 #Delete Patients
@@ -378,7 +378,7 @@ def cancel(id):
 		pass
 	message = f"Hello {appointment[2]} Your session with code {appointment[0]}, has been cancelled by our Admin / Doctor."
 	print(message)
-	sender.semaphore(appointment[3]', message)
+	sender.semaphore(appointment[3], message)
 	return redirect(url_for('bookings'))
 
 #Delete Patients
