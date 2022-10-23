@@ -9,6 +9,7 @@ from flask_mysqldb import MySQL,MySQLdb
 import json
 import requests
 
+import sender as sender
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'nothingtoseehere'
@@ -19,6 +20,9 @@ app.config['MYSQL_DB'] = 'clinic_apointment'
 app.permanent_session_lifetime = timedelta(hours = 1)
 
 mysql = MySQL(app)
+
+
+
 
 #Landing Page
 @app.route('/')
@@ -42,11 +46,7 @@ def make_booking(seldate = date.today()):
 		cursor = mysql.connection.cursor()
 		cursor.execute("SELECT concat(title, ' ', lastname, ' | ', field) `name` from doctors")
 		doctors = cursor.fetchall()
-
 		return render_template('makebooking.html', times = times, doctors = doctors, seldate = seldate)
-	
-	else:
-		return 'asd'
 
 # Login for Admin
 @app.route('/login', methods = ['POST', 'GET'])
@@ -92,17 +92,22 @@ def admin():
 	cursor.execute("select count(*) from patients")
 	patients = cursor.fetchall()
 
+	cursor.execute("select count(*) from patients")
+	patients = cursor.fetchall()
+
+	cursor.execute("select count(*) from appointments where date >= CURDATE()")
+	reminders = cursor.fetchall()
+
 	for doctor in doctors:
-		#print(doctor[0])
 		pass
 	for appointment in appointments:
-		#print(appointment[0])
 		pass
 	for patient in patients:
-		#print(patient[0])
+		pass
+	for reminder in reminders:
 		pass
 
-		return render_template('admin.html', var_apointments = appointment[0], var_patients = patient[0], var_doctors = doctor[0])
+		return render_template('admin.html', var_apointments = appointment[0], var_patients = patient[0], var_doctors = doctor[0], var_reminders = reminder[0])
 
 ###################################################################################################################################
 
@@ -110,11 +115,10 @@ def admin():
 @app.route('/calendar', methods = ['POST', 'GET'])
 def calendar():
 	if request.method == 'GET':
-		cur = mysql.connection.cursor()
-		cur.execute("SELECT concat(code, ' with doc.', dr, ' | ', notes), concat(date, ' ',STR_TO_DATE(time, '%l:%i %p')) FROM appointments where approve = 1")
-		#cur.execute("SELECT 'Session : SES1 with Dr. Gonzales', '2022-09-20 11:00:00', '2022-09-20 12:00:00' union all SELECT 'Session : SES78 with Dr. Juan', '2022-09-20 08:00:00', '2022-09-20 09:00:00'")
-		appointments = cur.fetchall()
-		return render_template('calendartest.html', appointments = appointments)
+		#cur = mysql.connection.cursor()
+		#cur.execute("SELECT concat(code, ' with doc.', dr, ' | ', notes), concat(date, ' ',STR_TO_DATE(time, '%l:%i %p')) FROM appointments where approve = 1")
+		#appointments = cur.fetchall()
+		return render_template('calendartest.html')
 
 	else:
 		code = request.form['session_code']
@@ -123,30 +127,16 @@ def calendar():
 		appointments = cur.fetchall()
 		print(code)
 		return render_template('calendartest.html', appointments = appointments)
-	
-'''events = [
-		{
-		'todo' : 'Test',
-		'date' : '2022-09-10',
-		'end' : '2022-09-20',
-		},
-		{
-		'todo' : 'Test2',
-		'date' : '2022-09-21',
-		'end' : '2022-09-25',
-		},
-			]'''
 
 
-#calendar checker
-@app.route('/calcheck', methods = ['POST'])
-def calcheck():
-	code = request.form['session_code']
-	cur = mysql.connection.cursor()
-	cur.execute("SELECT date, concat('Session: ', code, ' with doc.', dr, ' | ', notes) FROM appointments where code = '{code}'".format(code = code))
-	appointments = cur.fetchall()
-	print(code)
-	return render_template('calendar.html', appointments = appointments)
+#calendar admin
+@app.route('/calendar_admin', methods = ['POST', 'GET'])
+def calendar_admin():
+	if request.method == 'GET':
+		cur = mysql.connection.cursor()
+		cur.execute("SELECT concat(code, ' with doc.', dr, ' | ', notes), concat(date, ' ',STR_TO_DATE(time, '%l:%i %p')) FROM appointments where approve = 1")
+		appointments = cur.fetchall()
+		return render_template('calendartest.html', appointments = appointments)
 ##################################################################################################################################
 
 #View Doctors
@@ -279,7 +269,7 @@ def approved_bookings():
 	cur = mysql.connection.cursor()
 	cur.execute("SELECT id, date, concat(lastname, ', ', firstname) `name`, email, number, notes, dr FROM appointments where approve = 1 order by date desc")
 	appointments = cur.fetchall()
-	return render_template('appointmentslist.html', appointments = appointments)
+	return render_template('appointmentsapproved.html', appointments = appointments)
 
 #pending bookings list
 @app.route('/pending_bookings', methods = ['POST','GET'])
@@ -322,6 +312,7 @@ def add_booking():
 			pass
 		message = f"Hello {appointment[2]} Your session with code {appointment[0]} on {appointment[1]} is now booked, please wait for our confirmation."
 		print(message)
+		#sender.semaphore(appointment[3]', message)
 		return redirect(url_for('home'))
 	
 
@@ -368,8 +359,9 @@ def approve(id):
 	appointments = cur.fetchall()
 	for appointment in appointments:
 		pass
-	message = f"Hello {appointment[2]} Your session with code {appointment[0]}, has been confirmed by our Admin / Doctor"
+	message = f"Hello {appointment[2]} Your session with code {appointment[0]}, has been confirmed by our Admin / Doctor. Please do come in time."
 	print(message)
+	#sender.semaphore(appointment[3]', message)
 	return redirect(url_for('bookings'))
 
 #Delete Patients
@@ -378,6 +370,15 @@ def cancel(id):
 	cursor = mysql.connection.cursor()
 	cursor.execute("""update appointments set approve = 0 where id = '{id}'""".format(id = id))
 	mysql.connection.commit()
+
+	cur = mysql.connection.cursor()
+	cur.execute("SELECT code, concat(date, ' ', time), concat(lastname, ' ', firstname), number FROM appointments where id = '{id}' order by id desc limit 1".format(id = id))
+	appointments = cur.fetchall()
+	for appointment in appointments:
+		pass
+	message = f"Hello {appointment[2]} Your session with code {appointment[0]}, has been cancelled by our Admin / Doctor."
+	print(message)
+	#sender.semaphore(appointment[3]', message)
 	return redirect(url_for('bookings'))
 
 #Delete Patients
@@ -388,6 +389,8 @@ def archive_booking(id):
 	mysql.connection.commit()
 	return redirect(url_for('bookings'))
 		
+
+
 
 if __name__ == '__main__':
 	app.run(debug=True, host = '0.0.0.0')
