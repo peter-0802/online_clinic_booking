@@ -310,7 +310,7 @@ def add_booking():
 		appointments = cur.fetchall()
 		for appointment in appointments:
 			pass
-		message = f"Hello {appointment[2]} Your session with code {appointment[0]} on {appointment[1]} is now booked, please wait for our confirmation."
+		message = f"Hello {appointment[2]} Your session:{appointment[0]} on {appointment[1]} is now booked."
 		print(message)
 		sender.semaphore(appointment[3], message)
 		return redirect(url_for('home'))
@@ -359,7 +359,8 @@ def approve(id):
 	appointments = cur.fetchall()
 	for appointment in appointments:
 		pass
-	message = f"Hello {appointment[2]} Your session with code {appointment[0]}, has been confirmed by our Admin / Doctor. Please do come in time."
+	message = f"Hello {appointment[2]} Your session:{appointment[0]}, has been confirmed."
+	#message = f"{appointment[2]} {appointment[0]}"
 	print(message)
 	sender.semaphore(appointment[3], message)
 	return redirect(url_for('bookings'))
@@ -376,7 +377,7 @@ def cancel(id):
 	appointments = cur.fetchall()
 	for appointment in appointments:
 		pass
-	message = f"Hello {appointment[2]} Your session with code {appointment[0]}, has been cancelled by our Admin / Doctor."
+	message = f"Hello {appointment[2]} Your session:{appointment[0]} has been cancelled."
 	print(message)
 	sender.semaphore(appointment[3], message)
 	return redirect(url_for('bookings'))
