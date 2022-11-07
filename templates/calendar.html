@@ -2,7 +2,7 @@
 
 <html lang="en">
   <head>
-    <title>TCC | Calendar View</title>
+    <title>TCC Online | Calendar View</title>
     <meta property="og:title" content="Up Start Finance" />
     <meta property="twitter:card" content="summary_large_image" />
     <meta charset="utf-8" />
@@ -67,79 +67,100 @@
     <!---->
     <!--<link rel="stylesheet" href="./style.css" />-->
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/style.css') }}">
-
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+  
 
     <style>
       html, body {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
-      font-size: 14px;
-    }
+     margin: 0;
+     padding: 0;
+     font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+     font-size: 14px;
+   }
+   
+   #calendar {
+     max-width: 1100px;
+     margin: 40px auto;
+   }
+   
+   .fc-daygrid-event {
+     white-space: normal !important;
+     align-items: normal !important;
+   }
+       </style>
+   
+       <style>/* Style the form - display items horizontally */
+         .form-inline {
+           display: flex;
+           flex-flow: row wrap;
+           align-items: center;
+         }
+         
+         /* Add some margins for each label */
+         .form-inline label {
+           margin: 5px 10px 5px 0;
+         }
+         
+         /* Style the input fields */
+         .form-inline input {
+           vertical-align: middle;
+           margin: 5px 10px 5px 0;
+           padding: 10px;
+           background-color: #fff;
+           border: 1px solid #ddd;
+         }
+         
+         /* Style the submit button */
+         .form-inline button {
+           padding: 10px 20px;
+           background-color: dodgerblue;
+           color: white;
+         }
+         
+         .form-inline button:hover {
+           background-color: royalblue;
+         }
+         
+         /* Add responsiveness - display the form controls vertically instead of horizontally on screens that are less than 800px wide */
+         @media (max-width: 800px) {
+           .form-inline input {
+             margin: 10px 0;
+           }
+         
+           .form-inline {
+             flex-direction: column;
+             align-items: stretch;
+           }
+         }</style>
 
-    #calendar {
-      max-width: 1100px;
-      margin: 40px auto;
-    }
-
-    .fc-daygrid-event {
-      white-space: normal !important;
-      align-items: normal !important;
+         
+<link rel='stylesheet' href='https://fullcalendar.io/releases/fullcalendar/3.9.0/fullcalendar.min.css'>
+<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css'>
+  
+<style>
+#calendar {
+  max-width: 900px;
+  margin: 40px auto;
 }
-    </style>
+</style>
 
-    <style>/* Style the form - display items horizontally */
-      .form-inline {
-        display: flex;
-        flex-flow: row wrap;
-        align-items: center;
-      }
-      
-      /* Add some margins for each label */
-      .form-inline label {
-        margin: 5px 10px 5px 0;
-      }
-      
-      /* Style the input fields */
-      .form-inline input {
-        vertical-align: middle;
-        margin: 5px 10px 5px 0;
-        padding: 10px;
-        background-color: #fff;
-        border: 1px solid #ddd;
-      }
-      
-      /* Style the submit button */
-      .form-inline button {
-        padding: 10px 20px;
-        background-color: dodgerblue;
-        color: white;
-      }
-      
-      .form-inline button:hover {
-        background-color: royalblue;
-      }
-      
-      /* Add responsiveness - display the form controls vertically instead of horizontally on screens that are less than 800px wide */
-      @media (max-width: 800px) {
-        .form-inline input {
-          margin: 10px 0;
-        }
-      
-        .form-inline {
-          flex-direction: column;
-          align-items: stretch;
-        }
-      }</style>
+  <script>
+  window.console = window.console || function(t) {};
+</script>
 
-  </head>
-  <body>
-    <div>
-      <!--<link href="./home.css" rel="stylesheet" />-->
-      <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/home.css') }}">
+  
+  
+  <script>
+  if (document.location.search.match(/type=embed/gi)) {
+    window.parent.postMessage("resize", "*");
+  }
+</script>
+
+
+</head>
+
+<body translate="no" >
+
+  <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/home.css') }}">
       <div class="home-container">
         
         <div class="navbar-container">
@@ -179,39 +200,75 @@
           </div>
         </div>
       </div>
-   
-      <div style="height: 200px; width: 50%;" id="calendar"></div>
-      <script>
-          let calendarEL = document.getElementById('calendar');
-          let calendar = new FullCalendar.Calendar(calendarEL,
-          {
-            events: [
-            {% for appointment in appointments %}
-            {
-              title : '{{appointment[0]}}',
-              start : '{{appointment[1]}}',
-              end : '{{appointment[2]}}',
-            },
-            {% endfor %}
-           // other events here...
-                    ],
-                    eventTimeFormat: { // like '14:30:00'
-                      hour: '2-digit',
-                      minute: '2-digit',
-                      second: '2-digit',
-                      meridiem: 'short'
-                    }
-          });
-          calendar.render();
-      </script>
 
-  <!--Model JS-->
-  <script src="https://zuramai.github.io/mazer/demo/assets/js/bootstrap.js"></script>
-  <script src="https://zuramai.github.io/mazer/demo/assets/js/app.js"></script>
+  <div style="height: 200px; width: 50%;" id='calendar'></div>
 
-  <!-- Need: Apexcharts -->
-  <script src="https://zuramai.github.io/mazer/demo/assets/extensions/apexcharts/apexcharts.min.js"></script>
-  <script src="https://zuramai.github.io/mazer/demo/assets/js/pages/dashboard.js"></script>
-  <!---->
-  </body>
+<script src='https://fullcalendar.io/releases/fullcalendar/3.9.0/lib/moment.min.js'></script>
+<script src='https://fullcalendar.io/releases/fullcalendar/3.9.0/lib/jquery.min.js'></script>
+<script src='https://fullcalendar.io/releases/fullcalendar/3.9.0/fullcalendar.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js'></script>
+<script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js'></script>
+<script>
+
+  $(function() {
+    $('#calendar').fullCalendar({
+      timeZone: 'UTC',
+      initialView: 'dayGridMonth',
+      header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'month,agendaWeek,agendaDay'
+      },
+      footer: {
+        left: '',
+        center: '',
+        right: ''
+      },
+      customButtons: {
+        custom1: {
+          text: 'custom 1',
+          click: function() {
+            alert('clicked custom button 1!');
+          }
+        },
+        custom2: {
+          text: 'custom 2',
+          click: function() {
+            alert('clicked custom button 2!');
+          }
+        }
+      },
+
+      eventRender: function (eventObj, $el) {
+      $el.popover({
+        title: eventObj.title,
+        content: eventObj.description,
+        trigger: 'hover',
+        placement: 'top',
+        container: 'body' });
+
+    },
+
+    events: [
+    {% for appointment in appointments %}
+    {
+      title: '{{appointment[0]}}',
+      description: '{{appointment[1]}}',
+      start: '{{appointment[2]}}' },
+      {% endfor %}  
+    ],
+    timeFormat: '(h:mm) A'
+
+    });
+
+  }
+  );
+
+</script>
+
+  
+
+</body>
+
 </html>
+ 

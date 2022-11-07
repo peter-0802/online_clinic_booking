@@ -1,5 +1,6 @@
 {% extends "base.html" %}
-{% block title %}TCC Online | Patients List{% endblock %}
+{% block title %}TCC Online | Doctors List{% endblock %}
+
 {% block content %}
 
     <!--For the deletion modal-->
@@ -12,9 +13,9 @@
         <!-- Latest compiled JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
    <!--For the deletion modal-->
-
-<div class="">
-    <h3>Manage Patient Records</h3>
+   
+   <div class="">
+    <h3>Manage Doctors Records</h3>
   </div>
 
 
@@ -27,57 +28,46 @@
         <div class="col-12">
           <div class="card">
             <div class="card-header" style="margin-bottom: -40px;">
-              <h4 class="card-title">List of Patients</h4>
+              <h4 class="card-title">List of Doctors</h4>
             </div>
             <div class="card-content">
               <div class="card-body" style="margin-bottom: -10px;">
                 <p>
-                  Manage Patients information here, such as Adding a new record, updating exsisting information, and archiving a record
+                  Manage Doctors information here, such as Adding a new doctor, Updating doctor's information, and archiving a doctor from the list
                 </p>
               </div>
 
-
-              <!-- table hover -->
               <div class="table-responsive">
-                <table class="table table-hover mb-0" id = "tables">
-                  <thead>
-                    <tr>
-                      <th>Name</th>
-                      <th>Email</th>
-                      <th>Mobile</th>
-                      <th>ACTION</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {% for patient in patients %}
-                    <tr>
-                      <td hidden>{{patient[0]}}</td>
-                      <td>{{patient[1]}}</td>
-                      <td>{{patient[2]}}</td>
-                      <td>{{patient[3]}}</td>
-
-                      <td class="text-right" width = "200px">
-                        <span>
-                            <a href="/edit_pat/{{patient[0]}}"><button style="width: 70px; height: 30px; text-align: center; line-height: 0%;" class="btn btn-warning" type="button"><i class="fa fa-edit"></i></button></a>
-                            <!--<a href="/archive_pat/{{patient[0]}}"><button style="width: 70px; height: 30px; text-align: center; line-height: 0%;" class="btn btn-danger" type="button"><i class="fa fa-trash"></i></button></a>-->
-                            <button style="width: 70px; height: 30px; text-align: center; line-height: 0%;" class="btnEdit btn btn-danger" type="button"><i class="fa fa-trash"></i></button>
-                        </span>
-                      </td>
-
-                    </tr>
-                    {% endfor %}
-                  </tbody>
-                </table>
+                <div>
+                    <table class="table table-hover mb-0" id="myTable">
+                        <thead>
+                            <tr>
+                                <th>TITLE</th>
+                                <th>NAME</th>
+                                <th>FIELD</th>
+                                <th>ACTION</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for doc in doctors %}
+                                <tr>
+                                  <td hidden>{{doc[0]}}</td>
+                                  <td>{{doc[1]}}</td>
+                                  <td>{{doc[2]}}</td>
+                                  <td>{{doc[3]}}</td>
+                                    <!--<td><button class="btnEdit btn btn-primary">Edit</button></td>-->
+                                    <td class="text-right" width = "200px">
+                                        <span>
+                                            <a href="/edit_doc/{{doc[0]}}"><button style="width: 70px; height: 30px; text-align: center; line-height: 0%;" class="btn btn-warning" type="button"><i class="fa fa-edit"></i></button></a>
+                                            <button style="width: 70px; height: 30px; text-align: center; line-height: 0%;" class="btnEdit btn btn-danger" type="button"><i class="fa fa-trash"></i></button>
+                                        </span>
+                                </tr>
+                                {% endfor %}
+                        </tbody>
+            
+                    </table>
+                </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- Hoverable rows end -->
-    </section>
-  </div>
-
     <!--Disabled Backdrop Modal -->
     <div
     class="modal text-left"
@@ -142,10 +132,10 @@
             var docID = $(currentTds).eq(0).text(); // eq= cell , text = inner text
             var sel = $(currentTds).eq(2).text(); // eq= cell , text = inner text
             var isel = $(currentTds).eq(1).text(); // eq= cell , text = inner text
-            $("#delid").prop("href", "/archive_pat/"+docID)
-            $("#sel").text(isel)
+            $("#delid").prop("href", "/archived_doc/"+docID)
+            $("#sel").text(isel+" "+sel)
             $("#EditModal").modal('show');
         });
     </script>
+    {% endblock %}
 
-{% endblock %}

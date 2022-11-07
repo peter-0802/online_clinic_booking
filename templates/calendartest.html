@@ -191,7 +191,14 @@
 
       
       <div style="height: 200px; width: 50%;" id="calendar"></div>
-      <script>
+
+      <script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js'></script>
+      <script src='https://fullcalendar.io/releases/fullcalendar/3.9.0/lib/jquery.min.js'></script>
+<script src='https://fullcalendar.io/releases/fullcalendar/3.9.0/fullcalendar.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js'></script>
+<script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js'></script>
+
+      <script id="rendered-js" >
 
         document.addEventListener('DOMContentLoaded', function() {
           var calendarEl = document.getElementById('calendar');
@@ -204,6 +211,7 @@
               center: 'title',
               right: 'dayGridMonth,dayGridWeek,timeGridDay,listWeek'
             },
+          
             events: [
             {% for appointment in appointments %}
             {
@@ -219,14 +227,11 @@
                       meridiem: 'short'
                     }
           });
-      
+
           calendar.render();
         });
-      
+
       </script>
-
-
-
 
   <!--Model JS-->
   <script src="https://zuramai.github.io/mazer/demo/assets/js/bootstrap.js"></script>

@@ -118,15 +118,15 @@ def calendar():
 		#cur = mysql.connection.cursor()
 		#cur.execute("SELECT concat(code, ' with doc.', dr, ' | ', notes), concat(date, ' ',STR_TO_DATE(time, '%l:%i %p')) FROM appointments where approve = 1")
 		#appointments = cur.fetchall()
-		return render_template('calendartest.html')
+		return render_template('calendar.html')
 
 	else:
 		code = request.form['session_code']
 		cur = mysql.connection.cursor()
-		cur.execute("SELECT concat(code, ' with doc.', dr, ' | ', notes), concat(date, ' ',STR_TO_DATE(time, '%l:%i %p')) FROM appointments where approve = 1 and code = '{code}'".format(code = code))
+		cur.execute("SELECT code, concat(dr, ' | ', notes), concat(date, ' ',STR_TO_DATE(time, '%l:%i %p')) FROM appointments where approve = 1 and code = '{code}'".format(code = code))
 		appointments = cur.fetchall()
 		print(code)
-		return render_template('calendartest.html', appointments = appointments)
+		return render_template('calendar.html', appointments = appointments)
 
 
 #calendar admin
@@ -134,9 +134,9 @@ def calendar():
 def calendar_admin():
 	if request.method == 'GET':
 		cur = mysql.connection.cursor()
-		cur.execute("SELECT concat(code, ' with doc.', dr, ' | ', notes), concat(date, ' ',STR_TO_DATE(time, '%l:%i %p')) FROM appointments where approve = 1")
+		cur.execute("SELECT code, concat(dr, ' | ', notes), concat(date, ' ',STR_TO_DATE(time, '%l:%i %p')) FROM appointments where approve = 1")
 		appointments = cur.fetchall()
-		return render_template('calendartest.html', appointments = appointments)
+		return render_template('calendar.html', appointments = appointments)
 ##################################################################################################################################
 
 #View Doctors
@@ -146,7 +146,8 @@ def doctors():
 	cur.execute("SELECT id, title ``, concat(lastname, ', ', firstname) `name`, field FROM doctors")
 	doctors = cur.fetchall()
 	#print(doctors)
-	return render_template('doctorslist.html', doctors = doctors)
+	#return render_template('doctorslist.html', doctors = doctors)
+	return render_template('dclistnew.html', doctors = doctors)
 
 #Add Doctors
 @app.route('/add_doc', methods = ['POST'])
