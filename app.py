@@ -9,9 +9,13 @@ from flask_mysqldb import MySQL,MySQLdb
 import json
 import requests
 
+from flask import Flask
+from flask_ngrok import run_with_ngrok
+
 import sender as sender
 
 app = Flask(__name__)
+
 app.config['SECRET_KEY'] = 'nothingtoseehere'
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
@@ -21,6 +25,7 @@ app.permanent_session_lifetime = timedelta(hours = 1)
 
 mysql = MySQL(app)
 
+run_with_ngrok(app)  # Start ngrok when app is run
 
 
 
@@ -41,12 +46,27 @@ def make_booking(seldate = date.today()):
 		cursor = mysql.connection.cursor()
 		cursor.execute("select * from time_range where time not in(select time from appointments where date = '{seldate}')".format(seldate = seldate))
 		print("select * from time_range where time not in(select time from appointments where date = '{seldate}')".format(seldate = seldate))
-		times = cursor.fetchall()	
+		times = cursor.fetchall()
+		
+		withval = 'T'
 
 		cursor = mysql.connection.cursor()
 		cursor.execute("SELECT concat(title, ' ', lastname, ' | ', field) `name` from doctors")
 		doctors = cursor.fetchall()
-		return render_template('makebooking.html', times = times, doctors = doctors, seldate = seldate)
+
+		for idx, time in enumerate(times):
+			print(idx)
+			if idx is not None:
+				withval = 'F'
+				
+			else:
+				withval = 'T'
+
+		if withval == 'T':
+			return render_template('makebooking.html', times = times, doctors = doctors, seldate = seldate, disabled = 'disabled')
+		else:
+			return render_template('makebooking.html', times = times, doctors = doctors, seldate = seldate, hidden = 'hidden')
+		
 
 # Login for Admin
 @app.route('/login', methods = ['POST', 'GET'])
@@ -395,4 +415,5 @@ def archive_booking(id):
 
 
 if __name__ == '__main__':
-	app.run(debug=True, host = '0.0.0.0')
+	#app.run(debug=True, host = '0.0.0.0')
+	app.run()
